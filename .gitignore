@@ -205,3 +205,54 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+
+
+
+
+
+
+
+# ==========================================
+# MATLAB 
+# ==========================================
+
+# Archivos de autoguardado y copias de seguridad 
+*.asv
+*.m~
+*~
+*.bak
+*.tmp
+
+# Registros de errores y crash logs
+crash_dumps/
+*.log
+*.err
+matlab_crash_dump*
+
+# Archivos compilados MEX 
+*.mexa64
+*.mexm64
+*.mexw32
+*.mexw64
+*.mexmac
+*.mexmaci64
+
+# Caché y carpetas temporales de Simulink
+slprj/
+sfprj/
+*.slxc
+*.rtw
+
+# Carpetas de generación de código (MATLAB Coder / Simulink Coder)
+codegen/
+
+# Empaquetados y distribuciones
+*.mltx
+*.mlappinstall
+*.prj
+
+# Para evitar subir archivos muy pesados
+# *.mat
+
