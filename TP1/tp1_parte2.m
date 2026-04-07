@@ -28,6 +28,11 @@ angle = linspace(-pi/2, pi/2, size(data_scan,2));
 x_s = data_scan .* cos(angle);
 y_s = data_scan .* sin(angle);
 
+figure();
 plot(x_s, y_s, '.');
 axis equal;
+title('Escáner 2D del sensor LIDAR respecto a su propia terna.')
+xlabel('$x_{LIDAR}$ [m]', 'Interpreter', 'latex');
+ylabel('$y_{LIDAR}$ [m]', 'Interpreter', 'latex');
+exportgraphics(gcf, 'mapeo_lidar_2D.png', 'Resolution', 300);
 
