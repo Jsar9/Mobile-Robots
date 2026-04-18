@@ -50,12 +50,14 @@ classdef normal_distribution
         end
         
         function values = sampling_box_muller(mu, var, N)
-        
+            
             sigma = sqrt(var);
             
+            %Se obtienen las 2 uniformes necesarias
             u1 = rand(1, N);
             u2 = rand(1, N);
             
+            %Se obtienen las muestras utilizando u1 y u2
             x = cos(2 * pi * u1) .* sqrt(-2 * log(u2));
             
             values = mu + x * sigma;
