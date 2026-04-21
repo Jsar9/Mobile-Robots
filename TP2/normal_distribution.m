@@ -10,10 +10,9 @@ classdef normal_distribution
             for i=1:N
                 
                 % Se calcula la suma de las 12 muestras de la uniforme
-                % Se resta la media de la suma para centrarla en 0
-                sum_unif = sum(rand(1, 12)) - 6;
+                rand_values = -sigma + (2 * sigma) * rand(1, 12);
           
-                values(i) = mu + sum_unif * sigma;
+                values(i) = mu + 0.5 * sum(rand_values);
             end
         end
         
@@ -24,8 +23,9 @@ classdef normal_distribution
             %Se obtiene el máximo de la PDF normal
             M = 1 / sqrt(2*pi);
             
-            %Se definen los limites para el muestreo de la normal
-            b = 5;
+            %Se definen los limites para el muestreo de la normal,
+            %buscandoabarcar el mayor área posible partiendo de sigma
+            b = sigma+5;
             
             %Se definen las muestras que se aceptaron (debe llegar a N)
             samples_accepted = 0;
@@ -33,9 +33,10 @@ classdef normal_distribution
             %Se ejecuta hasta obtener las N muestras
             while samples_accepted < N
                 
-                %Se generan las muestras x e y
+                %Se generan las muestras x e y usando las uniformes en los
+                %intervalos 
                 x = -b + (2*b) * rand(); % de -b a b
-                y = M * rand();
+                y = M * rand(); % de 0 a M
                 
                 %Se obtiene la PDF en los x obtenidos
                 f_x = (1 / sqrt(2*pi)) * exp(-0.5 * x^2);
