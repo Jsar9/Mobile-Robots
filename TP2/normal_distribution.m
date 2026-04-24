@@ -10,8 +10,10 @@ classdef normal_distribution
             for i=1:N
                 
                 % Se calcula la suma de las 12 muestras de la uniforme
+                % entre -sigma y sigma
                 rand_values = -sigma + (2 * sigma) * rand(1, 12);
-          
+                
+                
                 values(i) = mu + 0.5 * sum(rand_values);
             end
         end
