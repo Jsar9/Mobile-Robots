@@ -148,5 +148,6 @@ bar(0:19, bel, 'b');
 title('Belief tras los comandos');
 xlabel('Celdas');
 ylabel('Belief - Probabilidad');
+xtickangle(0)
+xticks(0:20)
 grid on;
-axis([-1 20 0 max(bel)+0.05]);
