@@ -28,7 +28,7 @@ sigma = [1.0, 0.0, 0.0;
     
 % Perform filter update for each odometry, observation pair read from the
 % data file.
-for t = 1:size(data.timestep, 2)
+for t = 1:50 %1:size(data.timestep, 2)
     fprintf('.');
 
     % Perform the prediction step of the EKF

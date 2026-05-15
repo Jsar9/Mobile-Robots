@@ -10,12 +10,23 @@ function [mu, sigma] = correction_step(mu, sigma, z, l)
     % l: structure containing the landmark position and ids, see
     %    read_world for the format
 
+    %Se extraen las coordenadas del robot para mayor legibilidad del código
+    x = mu(1);
+    y = mu(2);
+    
 
     % Compute the expected range measurements.
     % This corresponds to the function h.
     expected_ranges = zeros(size(z, 2), 1);
     for i = 1:size(z, 2)
         % Todo: Implement
+        %Se obtienen las coordenadas del landmark actual
+        lx = l(z(i).id).x;
+        ly = l(z(i).id).y;
+        
+        %Se calcula la distancia esperada
+        expected_ranges(i) = sqrt((lx - x)^2 + (ly - y)^2);
+        
     end
 
     % Jacobian of h
@@ -24,13 +35,30 @@ function [mu, sigma] = correction_step(mu, sigma, z, l)
     % Measurements in vectorized form
     Z = zeros(size(z, 2), 1);
     for i = 1:size(z, 2)
-        H(i, :) = % Todo: Implement
-        Z(i) = % Todo: Implement
+        
+        % Todo: Implement
+        
+        lx = l(z(i).id).x;
+        ly = l(z(i).id).y;
+        
+        
+        %Matriz Jacobiana H, compuesta por las derivadas de las distancias
+        %esperadas
+        H(i, :) = [(x - lx) / expected_ranges(i), (y - ly) / expected_ranges(i), 0];
+        
+        %Se almacena en Z las lecturas reales del sensor
+        Z(i) = z(i).range; 
     end
 
     R = diag(repmat([0.5], size(z, 2), 1));
-
-    K = % Todo: Implement
-    mu = % Todo: Implement
-    sigma = % Todo: Implement
+    
+    % Todo: Implement
+    %Ganancia del filtro de Kalman
+    K = sigma * H' * inv(H * sigma * H' + R);
+    
+    %Se suma a la pose estimada, el error de medición escalado por K
+    mu = mu + K * (Z - expected_ranges);
+    
+    %Se actualiza la matriz de covarianzas
+    sigma = (eye(3) - K * H) * sigma;
 end

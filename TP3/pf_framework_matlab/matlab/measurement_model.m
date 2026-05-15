@@ -28,7 +28,6 @@ function weight = measurement_model(z, x, l)
         %como ruido para la partícula
         likelihood = (1 / sqrt(2 * pi * sigma^2)) * exp(-((measurement_range - exp_distance).^2) / (2 * sigma^2));
         
-        
         weight = weight .* likelihood;
         
     end
