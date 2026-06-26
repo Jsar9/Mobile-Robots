@@ -42,7 +42,8 @@ for i = 1:numParticles
       theta_rob = robot(3);
       
       %Se mapea la pose del landmark a la terna global según la pose
-      %actual del robot
+      %actual del robot, en la primer iteración, cuando el landmark no fue
+      %visualizado.
       particles(i).landmarks(l).mu = [x_rob + r * cos(theta_rob + phi); 
                                       y_rob + r * sin(theta_rob + phi)];
 
@@ -50,8 +51,8 @@ for i = 1:numParticles
       [h, H] = measurement_model(particles(i), z(j));
 
       % TODO: initialize the covariance for this landmark
-      %Se calcula la varianza para el landmark l, utilizando la matriz
-      %inversa de la jacobiana H y su transpuesta
+      %Se calcula la covarianza inicial para el landmark l, cuando no fue observado aún,
+      % utilizando la matriz inversa de la jacobiana H y su transpuesta
       particles(i).landmarks(l).sigma = inv(H) * Q_t * inv(H)';
 
       % Indicate that this landmark has been observed
@@ -64,7 +65,8 @@ for i = 1:numParticles
 
       % TODO: compute the measurement covariance
       %Se obtiene la incertidumbre total, producto del sensor y la
-      %incertidumbre asociada a la posición del landmark
+      %incertidumbre asociada a la posición del landmark.
+      % Cálculo de la covarianza de la innovación.
       Q = H * particles(i).landmarks(l).sigma * H' + Q_t;
 
       % TODO: calculate the Kalman gain
@@ -74,7 +76,7 @@ for i = 1:numParticles
       % TODO: compute the error between the z and expectedZ (remember to normalize the angle using the function normalize_angle())
       % Se obtiene el error de la medición del sensor con lo que se esperaba medir
       % basándose en su mapa (Tanto la distancia como los ángulos medidos y
-      % esperados).
+      % esperados). Cálculo de la innovación.
       diffZ = [z(j).range - expectedZ(1);
                normalize_angle(z(j).bearing - expectedZ(2))];
 
