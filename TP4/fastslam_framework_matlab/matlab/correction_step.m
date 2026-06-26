@@ -73,19 +73,20 @@ for i = 1:numParticles
 
       % TODO: compute the error between the z and expectedZ (remember to normalize the angle using the function normalize_angle())
       % Se obtiene el error de la medición del sensor con lo que se esperaba medir
-      % basándose en su mapa (Tanto la distancia como el ángulo medido y
-      % esperado).
+      % basándose en su mapa (Tanto la distancia como los ángulos medidos y
+      % esperados).
       diffZ = [z(j).range - expectedZ(1);
                normalize_angle(z(j).bearing - expectedZ(2))];
 
       % TODO: update the mean and covariance of the EKF for this landmark
-      %Se actualizan las medias y covarianzas del EKF, utilizando la
-      %ganancia de Kalman y la diferencia previa.
+      %Se actualizan las medias y covarianzas del EKF para el landmark
+      % utilizando la ganancia de Kalman y el error entre la distancia 
+      % del landmark y lo esperado
       particles(i).landmarks(l).mu = particles(i).landmarks(l).mu + K * diffZ;
       particles(i).landmarks(l).sigma = (eye(2) - K * H) * particles(i).landmarks(l).sigma;
 
       % TODO: compute the likelihood of this observation, multiply with the former weight
-      %       to account for observing several features in one time step
+      % to account for observing several features in one time step
       %Se calcula la verosimilitud, utilizando la expresión de la Gaussiana
       likelihood = (1 / sqrt(det(2 * pi * Q))) * exp(-0.5 * diffZ' * inv(Q) * diffZ);
       particles(i).weight = particles(i).weight * likelihood;
